@@ -62,3 +62,5 @@ Visitor : pour représenter une fonction appliquée à un script (comme une inte
 Méthode modèle : pour représenter un script puis son interprétation
 Etc.
 Comment représenter un script? On peut le représenter par un texte dans un fichier, puis l'analyser pour produire un arbre de syntaxe abstraite. Un arbre de syntaxe abstraite représente le script sous une forme structurée, arborescente, faisant abstraction des détails syntaxiques. Il s'implémente typiquement par une structure de données de type Arbre en Java. Il n'est pas demandé de suivre cette voie, correspondant à une compilation, pour réaliser ce projet. Il est plutôt recommandé d'embarquer directement le langage de dessin dans le langage Java, ce qui permet d'éviter les phases d'analyse lexicale et syntaxique des scripts textuels. On représente alors directement le script par du code Java, suivant une architecture à définir, par exemple par un arbre, ou par une fonction paramétrée par les primitives de dessin. On pourra s'inspirer de la méthode décrite dans l'article Embedded Typesafe Domain Specific Languages for Java (2008).
+
+Test connexion GIT
