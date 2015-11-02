@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import draw.chemin.shapes.Arc;
 import draw.chemin.shapes.Cercle;
 import draw.chemin.shapes.Ellipse;
+import draw.chemin.shapes.Ligne;
 import draw.chemin.shapes.Point;
 import draw.utils.Crayon;
 import draw.visitors.interfaces.IDessinateur;
@@ -37,6 +38,14 @@ public class Dessinateur implements IDessinateur {
 
 	@Override
 	public void dessine(Point p, Crayon crayon) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void dessine(Ligne l, Crayon crayon) {
 		// TODO Auto-generated method stub
 		
 	}

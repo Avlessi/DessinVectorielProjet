@@ -45,9 +45,13 @@ public abstract class Chemin {
 	
 	public abstract boolean isFerme();	
 	
-	protected abstract void addSegment(Chemin chemin);	
+	protected void addSegment(Chemin chemin) {
+		segments.add(chemin);
+	}
 	
-	protected abstract void remove(Chemin chemin);	
+	protected void remove(Chemin chemin) {
+		segments.remove(chemin);
+	}
 
 
 }

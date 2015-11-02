@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import draw.chemin.Chemin;
+import draw.chemin.shapes.Cercle;
 import draw.chemin.shapes.Ellipse;
+import draw.chemin.shapes.Ligne;
 import draw.chemin.shapes.Point;
 import draw.utils.Crayon;
 import draw.visitors.interfaces.IDessinateur;
@@ -46,7 +48,20 @@ public class Dessin {
 	}
 	
 	public Chemin ajouterEllipse(Point p, float rx, float ry) {
-		return new Ellipse(p, rx, ry);
+		Chemin c = new Ellipse(p, rx, ry); 
+		return c;
+	}
+	
+	public Chemin ajouterCercle(Point p, float r) {
+		Chemin c = new Cercle(p, r);
+		cheminList.add(c);
+		return c;
+	}
+	
+	public Chemin ajouterLigne(Point p1, Point p2) {
+		Chemin c = new Ligne(p1, p2);
+		cheminList.add(c);
+		return c;
 	}
 	
 	public Crayon creerCrayon(int epaisseur, Color color) {
@@ -55,15 +70,15 @@ public class Dessin {
 	}
 	
 	public void etiqueter() {
-		
+		//TODO
 	}	
 	
 	public void remplir() {
-		
+		//TODO
 	}
 	
 	public void inserer() {
-		
+		//TODO
 	}
 	
 }

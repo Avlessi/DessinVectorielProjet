@@ -17,15 +17,13 @@ public class Main {
 		float rx = 5f;
 		float ry = 10f;
 		Chemin chemin = d.ajouterEllipse(p, rx, ry);
-		//Chemin chemin2 = d.ajouterCercle(10, 10, 5);
-		//Chemin chemin3 = d.ajouterLigne(0, 0, 1, 1);		
-				
-		//float epaisseur = 5;
-		//Crayon crayon = d.creerCrayon(epaisseur, Color.BLACK);		
+		Chemin chemin2 = d.ajouterCercle(p, 5);
 		
-		if(chemin.isFerme()) {			
-			//chemin.remplir(crayon);			
-		}
-		//d.scale(3.0);		
+		int epaisseur = 1; 
+		Crayon crayon = d.creerCrayon(epaisseur, Color.BLACK);
+		Point p1 = d.creerPoint(20, 20);
+		Point p2 = d.creerPoint(30, 30);
+		Chemin chemin3 = d.ajouterLigne(p1, p2);		
+				
 	}
 }
