@@ -23,7 +23,8 @@ public class Main {
 		Crayon crayon = d.creerCrayon(epaisseur, Color.BLACK);
 		Point p1 = d.creerPoint(20, 20);
 		Point p2 = d.creerPoint(30, 30);
-		Chemin chemin3 = d.ajouterLigne(p1, p2);		
+		Chemin chemin3 = d.ajouterLigne(p1, p2);
+		d.draw(crayon);
 				
 	}
 }
