@@ -1,18 +1,22 @@
 package draw;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
 import draw.chemin.Chemin;
+import draw.chemin.shapes.Arc;
 import draw.chemin.shapes.Cercle;
 import draw.chemin.shapes.Ellipse;
 import draw.chemin.shapes.Ligne;
 import draw.chemin.shapes.Point;
+import draw.interfaces.impl.DessinateurPanel;
+import draw.interfaces.impl.Graphics2dDessinateur;
 import draw.utils.Crayon;
-import draw.visitors.interfaces.IDessinateur;
-import draw.visitors.interfaces.impl.Dessinateur;
 
 public class Dessin {
 	Canvas parentCanvas;
@@ -34,40 +38,57 @@ public class Dessin {
 		this.parentCanvas = canvas;
 	}
 	
-	public void draw(Crayon crayon) {
-		//TODO 
-		Graphics2D g = null;
-		IDessinateur dess = new Dessinateur(g);
+	public void dessiner(Chemin chemin, Crayon crayon) {
+		//TODO		
+		JFrame frame = new JFrame("Dessin");
+		//Graphics2dDessinateur panel = new Graphics2dDessinateur();
+		DessinateurPanel panel = new DessinateurPanel(chemin, new Graphics2dDessinateur());
+		frame.add(panel);
+			
+		
+		/*IDessinateur dess = new Dessinateur();
 		for(Chemin chemin: cheminList) {
 			chemin.accept(dess);
-		}
+		}*/
+		
+		frame.setVisible(true);
+		frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				
+		
+		//chemin.accept(panel);
+	}
+	
+	public void dessinerSvg() {
+		
 	}
 	
 	public Point creerPoint(int x, int y) {
 		return new Point(x, y);
 	}
 	
-	public Chemin ajouterEllipse(Point p, float rx, float ry) {
-		Chemin c = new Ellipse(p, rx, ry); 
+	public Chemin creerArc(Point center, float rx) {
+		return new Arc(center, rx);
+	}
+	
+	public Chemin creerllipse(Point center, float rx, float ry) {
+		return new Ellipse(center, rx, ry);
+	}
+	
+	public Chemin creerCercle(Point p, float r) {
+		Chemin c = new Cercle(p, r);		
 		return c;
 	}
 	
-	public Chemin ajouterCercle(Point p, float r) {
-		Chemin c = new Cercle(p, r);
-		cheminList.add(c);
-		return c;
+	public Chemin creerLigne(Point p1, Point p2) {
+		return new Ligne(p1, p2);	
 	}
-	
-	public Chemin ajouterLigne(Point p1, Point p2) {
-		Chemin c = new Ligne(p1, p2);
-		cheminList.add(c);
-		return c;
-	}
+		 
 	
 	public Crayon creerCrayon(int epaisseur, Color color) {
 		Crayon crayon = new Crayon(epaisseur, color);
 		return crayon;
-	}
+	}	
 	
 	public void etiqueter() {
 		//TODO

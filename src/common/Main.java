@@ -13,7 +13,7 @@ public class Main {
 		Canvas c = Canvas.getCanvas();
 		Dessin d = c.creerDessin();
 						
-		Point p = d.creerPoint(0, 0);
+		/*Point p = d.creerPoint(0, 0);
 		float rx = 5f;
 		float ry = 10f;
 		Chemin chemin = d.ajouterEllipse(p, rx, ry);
@@ -24,7 +24,13 @@ public class Main {
 		Point p1 = d.creerPoint(20, 20);
 		Point p2 = d.creerPoint(30, 30);
 		Chemin chemin3 = d.ajouterLigne(p1, p2);
-		d.draw(crayon);
+		d.draw(crayon);*/
+				
+		Crayon crayon = d.creerCrayon(1, Color.BLACK);
+		//Chemin point = d.creerPoint(20, 20);
+		//d.dessiner(point, crayon);
+		Chemin ligne = d.creerLigne(d.creerPoint(5, 5), d.creerPoint(15, 15));
+		d.dessiner(ligne, crayon);
 				
 	}
 }

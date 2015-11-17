@@ -1,9 +1,13 @@
 package draw.chemin.shapes;
 
-import draw.chemin.Courbe;
+import java.awt.Graphics;
+
+import com.sun.istack.internal.Nullable;
+
+import draw.chemin.Chemin;
 import draw.visitors.interfaces.IDessinateur;
 
-public class Ellipse extends Courbe {
+public class Ellipse extends Chemin {
 	
 	Point center;
 	float radius_x;
@@ -15,8 +19,14 @@ public class Ellipse extends Courbe {
 		radiux_y = r_y;
 	}
 		
-	public void accept(IDessinateur v) {
-		v.dessine(this, crayon);
+	public void accept(IDessinateur v, @Nullable Graphics g) {
+		v.dessine(this, crayon, g);
+	}
+
+	@Override
+	public boolean isFerme() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

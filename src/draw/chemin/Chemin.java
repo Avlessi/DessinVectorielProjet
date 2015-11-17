@@ -1,11 +1,22 @@
 package draw.chemin;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.istack.internal.Nullable;
 
 import draw.utils.Crayon;
 import draw.visitors.interfaces.IDessinateur;
+
+/*A path (or guide - see Variables and Data Types for the difference) in Asymptote is simply 
+a piecewise cubic function of a parameter t, parameterized as t ranges from 0 to the number of nodes
+(say n) that determine the path. The most basic way to make paths is by joining points 
+(which can be thought of as paths with length 0) or paths p, q together with one of the following
+operators: 
+	p--q  connects the end of path p to the beginning of q with a straight line. 
+	p..q  connects them with a Bezier cubic spline interpolation so that paths are joined smoothly.	
+*/
 
 public abstract class Chemin {
 	
@@ -15,6 +26,10 @@ public abstract class Chemin {
 	protected IDessinateur dessinateur;
 //	protected IEtiquetable etiquetable;
 //	protected IRemplissable remplissable;
+	
+	public void setDessinateur(IDessinateur dess) {
+		this.dessinateur = dess;
+	}
 	
 	public Crayon getCrayon() {
 		return crayon;
@@ -32,7 +47,7 @@ public abstract class Chemin {
 		this.zoom = zoom;
 	}	
 	
-	public abstract void accept(IDessinateur v);	
+	public abstract void accept(IDessinateur v, @Nullable Graphics g);	
 	
 	protected Chemin getRoot() {
 		return segments.get(0);
