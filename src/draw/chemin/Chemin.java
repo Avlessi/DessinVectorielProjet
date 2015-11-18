@@ -61,4 +61,12 @@ public abstract class Chemin {
 	public abstract void addSegment(Chemin chemin) ;
 	
 	public abstract void remove(Chemin chemin);
+	
+	public void connectWithLine(Chemin chemin) {
+		//TODO
+	}
+	
+	public void connectWithBezier(Chemin chemin) {
+		//TODO
+	}
 }

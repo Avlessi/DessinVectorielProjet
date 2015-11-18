@@ -4,11 +4,12 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import draw.chemin.connection.CheminConnection;
 import draw.visitors.interfaces.IDessinateur;
 
-public class CompositeChemin extends Chemin {
-	
-	protected List<Chemin> segments = new ArrayList<Chemin>();
+public class ComplexChemin extends Chemin {
+			
+	private CheminConnection connection; 
 
 	@Override
 	public void accept(IDessinateur v, Graphics g) {
