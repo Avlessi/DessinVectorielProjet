@@ -20,8 +20,8 @@ operators:
 
 public abstract class Chemin {
 	
-	protected List<Chemin> segments = new ArrayList<Chemin>();
-	protected Crayon crayon;
+	
+	private Crayon crayon;
 	float zoom = 1f;	
 	protected IDessinateur dessinateur;
 //	protected IEtiquetable etiquetable;
@@ -49,9 +49,7 @@ public abstract class Chemin {
 	
 	public abstract void accept(IDessinateur v, @Nullable Graphics g);	
 	
-	protected Chemin getRoot() {
-		return segments.get(0);
-	}
+	protected abstract Chemin getRoot();	
 	
 	//public abstract Point getPointArrivee();
 	
@@ -60,13 +58,7 @@ public abstract class Chemin {
 	
 	public abstract boolean isFerme();	
 	
-	protected void addSegment(Chemin chemin) {
-		segments.add(chemin);
-	}
+	public abstract void addSegment(Chemin chemin) ;
 	
-	protected void remove(Chemin chemin) {
-		segments.remove(chemin);
-	}
-
-
+	public abstract void remove(Chemin chemin);
 }

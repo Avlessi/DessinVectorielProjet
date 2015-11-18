@@ -20,13 +20,31 @@ public class Ellipse extends Chemin {
 	}
 		
 	public void accept(IDessinateur v, @Nullable Graphics g) {
-		v.dessine(this, crayon, g);
+		v.dessine(this, getCrayon(), g);
 	}
 
 	@Override
 	public boolean isFerme() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	protected Chemin getRoot() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addSegment(Chemin chemin) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void remove(Chemin chemin) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

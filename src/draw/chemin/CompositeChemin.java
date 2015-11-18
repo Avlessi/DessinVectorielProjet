@@ -1,36 +1,31 @@
-package draw.chemin.shapes;
+package draw.chemin;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.sun.istack.internal.Nullable;
-
-import draw.chemin.Chemin;
 import draw.visitors.interfaces.IDessinateur;
 
-public class Cercle extends Chemin {
+public class CompositeChemin extends Chemin {
 	
-	Point center;
-	float radius;
-	
-	public Cercle(Point p, float r) {
-		this.center = p;
-		this.radius = r;
-	}
-	
-	public void accept(IDessinateur v, @Nullable Graphics g) {
-		v.dessine(this, getCrayon(), g);
-	}
+	protected List<Chemin> segments = new ArrayList<Chemin>();
 
 	@Override
-	public boolean isFerme() {
+	public void accept(IDessinateur v, Graphics g) {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
 
 	@Override
 	protected Chemin getRoot() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean isFerme() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 	@Override
@@ -44,4 +39,5 @@ public class Cercle extends Chemin {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

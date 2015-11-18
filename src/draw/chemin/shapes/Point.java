@@ -35,7 +35,7 @@ public class Point extends Chemin {
 	
 	
 	public void accept(IDessinateur v, @Nullable Graphics g) {
-		v.dessine(this, crayon, g);
+		v.dessine(this, getCrayon(), g);
 	}
 
 	@Override
@@ -44,12 +44,18 @@ public class Point extends Chemin {
 	}
 
 	@Override
-	protected void addSegment(Chemin chemin) {		
+	public void addSegment(Chemin chemin) {		
 		
 	}
 
 	@Override
-	protected void remove(Chemin chemin) {		
+	public void remove(Chemin chemin) {		
 		
+	}
+
+	@Override
+	protected Chemin getRoot() {
+		// TODO Auto-generated method stub
+		return null;
 	}	
 }

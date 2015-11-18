@@ -49,9 +49,7 @@ public class Graphics2dDessinateur implements IDessinateur {
 	public void dessine(Ligne l, Crayon crayon, @Nullable Graphics g) {
 		System.out.println("dessine Ligne");
 		g.drawLine(l.getP1().getX(), l.getP1().getY(), l.getP2().getX(), l.getP2().getY());
-		
-		
-		
+				
 	}
 
 	
