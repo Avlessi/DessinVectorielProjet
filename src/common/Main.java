@@ -5,7 +5,6 @@ import java.awt.Color;
 import draw.Canvas;
 import draw.Dessin;
 import draw.chemin.Chemin;
-import draw.chemin.shapes.Point;
 import draw.utils.Crayon;
 
 public class Main {

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import draw.awt.EllipseAWT;
 import draw.chemin.Chemin;
 import draw.chemin.ComplexChemin;
 import draw.chemin.shapes.Arc;
@@ -28,11 +27,13 @@ public class AwtDrawer extends JFrame implements IDrawer {
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-	}
+	}	
 	
 	class DrawPanel extends JPanel implements IDrawingAWTCallback {
-		
+		Graphics g;
 		List<Chemin> chemins = new ArrayList<Chemin>();
+		
+		
 		
 		public void addChemin(Chemin chemin) {
 			chemins.add(chemin);
@@ -42,7 +43,7 @@ public class AwtDrawer extends JFrame implements IDrawer {
 		
 		@Override
 		public void paint(Graphics g) {
-			super.paintComponent(g);
+			super.paintComponent(g);			
 			for(Chemin chemin : chemins) {
 				chemin.accept(this, g);		
 			}
@@ -86,13 +87,7 @@ public class AwtDrawer extends JFrame implements IDrawer {
 			// TODO Auto-generated method stub
 			
 		}
-	}
-	
-	public void update(Ellipse e, Object g) {
-		Graphics g2 = (Graphics) g;
-		EllipseAWT a = new EllipseAWT(e);
-		a.paint(g2);
-	}
+	}	
 
 	@Override
 	public void draw(Chemin chemin) {	
