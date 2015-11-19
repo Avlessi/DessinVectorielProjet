@@ -12,7 +12,7 @@ public class Crayon {
 		this.parentDessin = dessin;
 	}
 	
-	public Crayon(int epaisseur, Color color) {
+	public Crayon(Color color, int thickness ) {
 		
 	}
 	

@@ -5,7 +5,8 @@ import java.awt.Graphics;
 import com.sun.istack.internal.Nullable;
 
 import draw.chemin.Chemin;
-import draw.visitors.interfaces.IDessinateur;
+import draw.utils.IDrawingAWTCallback;
+import draw.utils.IDrawingCallback;
 
 public class Point extends Chemin {
 	
@@ -33,19 +34,10 @@ public class Point extends Chemin {
 		this.y = y;
 	}
 	
-	
-	public void accept(IDessinateur v, @Nullable Graphics g) {
-		v.dessine(this, getCrayon(), g);
-	}
 
 	@Override
-	public boolean isFerme() {	
+	public boolean isClosed() {	
 		return true;
-	}
-
-	@Override
-	public void addSegment(Chemin chemin) {		
-		
 	}
 
 	@Override
@@ -57,5 +49,15 @@ public class Point extends Chemin {
 	protected Chemin getRoot() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void accept(IDrawingAWTCallback callback, Graphics g) {
+		callback.drawingAWTCallback(this, g);		
+	}
+
+	@Override
+	public void accept(IDrawingCallback callback) {
+		callback.drawingCallback(this);		
 	}	
 }

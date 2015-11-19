@@ -1,105 +1,98 @@
 package draw;
 
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 import draw.chemin.Chemin;
 import draw.chemin.shapes.Arc;
-import draw.chemin.shapes.Cercle;
+import draw.chemin.shapes.Circle;
 import draw.chemin.shapes.Ellipse;
-import draw.chemin.shapes.Ligne;
 import draw.chemin.shapes.Point;
-import draw.interfaces.impl.DessinateurPanel;
-import draw.interfaces.impl.Graphics2dDessinateur;
+import draw.factories.DrawerFactory;
+import draw.factories.IDrawerFactory;
+import draw.factories.ShapesFactory;
 import draw.utils.Crayon;
 
+/**
+ *
+ * Dessin class serves as a manager class
+ */
+
 public class Dessin {
-	Canvas parentCanvas;
-	List<Chemin> cheminList = new ArrayList<Chemin>();	
-	float zoom = 1f;
+	Painter painter;	
+	IDrawerFactory drawFactory;
+	DrawType drawType;
 	
 	public Dessin() {		
+		drawType = DrawType.AWT; // set default draw type
+		drawFactory = new DrawerFactory();		
+		painter = new Painter(drawFactory.create(drawType));				
 	}
 	
-	public float getZoom() {
-		return this.zoom;
+	protected void setPainter(Painter p) {
+		this.painter = p;
 	}
 	
-	public void setZoom(float zoom) {
-		this.zoom = zoom;
+	/**	 
+	 * this method will reset Drawer!  
+	 * 
+	 */
+	public void setDrawType(DrawType type) {		
+		if(drawType != type) {
+			drawType = type;
+			// go to another drawing implementation
+			// a new drawer context will be created
+			painter.setDrawer(drawFactory.create(type));
+		}		
 	}
-	
-	public Dessin(Canvas canvas) {
-		this.parentCanvas = canvas;
-	}
-	
-	public void dessiner(Chemin chemin, Crayon crayon) {
-		//TODO		
-		JFrame frame = new JFrame("Dessin");
-		//Graphics2dDessinateur panel = new Graphics2dDessinateur();
-		DessinateurPanel panel = new DessinateurPanel(chemin, new Graphics2dDessinateur());
-		frame.add(panel);
-			
-		
-		/*IDessinateur dess = new Dessinateur();
-		for(Chemin chemin: cheminList) {
-			chemin.accept(dess);
-		}*/
-		
-		frame.setVisible(true);
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				
-		
-		//chemin.accept(panel);
-	}
-	
-	public void dessinerSvg() {
-		
-	}
-	
-	public Point creerPoint(int x, int y) {
-		return new Point(x, y);
-	}
-	
-	public Chemin creerArc(Point center, float rx) {
-		return new Arc(center, rx);
-	}
-	
-	public Chemin creerllipse(Point center, float rx, float ry) {
-		return new Ellipse(center, rx, ry);
-	}
-	
-	public Chemin creerCercle(Point p, float r) {
-		Chemin c = new Cercle(p, r);		
-		return c;
-	}
-	
-	public Chemin creerLigne(Point p1, Point p2) {
-		return new Ligne(p1, p2);	
-	}
-		 
-	
-	public Crayon creerCrayon(int epaisseur, Color color) {
-		Crayon crayon = new Crayon(epaisseur, color);
-		return crayon;
+	/**
+	 * get drawer type
+	 * @return
+	 */
+	public DrawType getDrawType() {
+		return this.drawType;
 	}	
 	
-	public void etiqueter() {
-		//TODO
-	}	
-	
-	public void remplir() {
-		//TODO
+	public void draw(Chemin chemin) {		
+		painter.draw(chemin);		
 	}
 	
-	public void inserer() {
+	public void label() {
 		//TODO
+		//painter.label();
+	}
+	
+	public void fill() {
+		//TODO
+		//painter.fill();
+	}
+	
+	public void insert() {
+		//TODO
+		//painter.insert():
+	}
+	
+	public Chemin createPoint(int x, int y) {
+		return ShapesFactory.createPoint(x, y);
+	}
+	
+	public Chemin createLine(int x1, int y1, int x2, int y2) {
+		return ShapesFactory.createLine(x1, y1, x2, y2);
+	}	
+	
+	public Chemin createArc(int center_x, int center_y, int rx, int ry, int startAngle, int arcAngle) {
+		return ShapesFactory.createArc(ShapesFactory.createPoint(center_x, center_y), rx, ry, startAngle, arcAngle);
+	}
+	
+	public Chemin createEllipse(int center_x, int center_y, int rx, int ry) {
+		return ShapesFactory.createEllipse(ShapesFactory.createPoint(center_x, center_y), rx, ry);
+	}
+	
+	public Chemin createCircle(int center_x, int center_y, int r) {
+		return ShapesFactory.createCircle(ShapesFactory.createPoint(center_x, center_y), r);		
+	}		
+	
+	public Crayon createCrayon(Color color, int thickness) {
+		return new Crayon(color, thickness);
 	}
 	
 }

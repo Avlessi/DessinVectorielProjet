@@ -10,8 +10,9 @@ public class BezierCurveConnection implements CheminConnection {
 	}
 	
 	@Override
-	public void connectWith(Chemin c) {
+	public CheminConnection connectWith(Chemin c) {
 		// TODO Auto-generated method stub
+		return null;
 		
 	}
 

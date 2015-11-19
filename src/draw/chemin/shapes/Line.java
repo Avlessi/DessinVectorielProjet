@@ -2,16 +2,15 @@ package draw.chemin.shapes;
 
 import java.awt.Graphics;
 
-import com.sun.istack.internal.Nullable;
-
 import draw.chemin.Chemin;
-import draw.visitors.interfaces.IDessinateur;
+import draw.utils.IDrawingAWTCallback;
+import draw.utils.IDrawingCallback;
 
-public class Ligne extends Chemin {
+public class Line extends Chemin {
 	
 	Point p1, p2;
 	
-	public Ligne(Point p1, Point p2) {
+	public Line(Point p1, Point p2) {
 		this.p1 = p1;
 		this.p2 = p2;
 	}
@@ -30,15 +29,10 @@ public class Ligne extends Chemin {
 
 	public void setP2(Point p2) {
 		this.p2 = p2;
-	}
+	}	
 
 	@Override
-	public void accept(IDessinateur v, @Nullable Graphics g) {
-		v.dessine(this, getCrayon(), g);		
-	}
-
-	@Override
-	public boolean isFerme() {		
+	public boolean isClosed() {		
 		return true;
 	}
 
@@ -49,15 +43,19 @@ public class Ligne extends Chemin {
 	}
 
 	@Override
-	public void addSegment(Chemin chemin) {
-		// TODO Auto-generated method stub
+	public void remove(Chemin chemin) {
+		// TODO Auto-generated method stub		
+	}
+
+	@Override
+	public void accept(IDrawingAWTCallback callback, Graphics g) {
+		callback.drawingAWTCallback(this, g);
 		
 	}
 
 	@Override
-	public void remove(Chemin chemin) {
-		// TODO Auto-generated method stub
-		
+	public void accept(IDrawingCallback callback) {
+		callback.drawingCallback(this);		
 	}
 	
 }

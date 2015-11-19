@@ -2,22 +2,18 @@ package draw.chemin.shapes;
 
 import java.awt.Graphics;
 
-import com.sun.istack.internal.Nullable;
-
 import draw.chemin.Chemin;
 import draw.utils.IDrawingAWTCallback;
 import draw.utils.IDrawingCallback;
 
-public class Ellipse extends Chemin {
+public class Circle extends Chemin {
 	
 	Point center;
-	int radius_x;
-	int radiux_y;
+	int radius;
 	
-	public Ellipse(Point center, int r_x, int r_y) {		
-		this.center = center;
-		radius_x = r_x;
-		radiux_y = r_y;
+	public Circle(Point p, int r) {
+		this.center = p;
+		this.radius = r;
 	}	
 
 	public Point getCenter() {
@@ -28,24 +24,16 @@ public class Ellipse extends Chemin {
 		this.center = center;
 	}
 
-	public int getRadius_x() {
-		return radius_x;
+	public int getRadius() {
+		return radius;
 	}
 
-	public void setRadius_x(int radius_x) {
-		this.radius_x = radius_x;
-	}
-
-	public int getRadiux_y() {
-		return radiux_y;
-	}
-
-	public void setRadiux_y(int radiux_y) {
-		this.radiux_y = radiux_y;
+	public void setRadius(int radius) {
+		this.radius = radius;
 	}
 
 	@Override
-	public boolean isClosed() {		
+	public boolean isClosed() {
 		return true;
 	}
 
@@ -54,6 +42,7 @@ public class Ellipse extends Chemin {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
 
 	@Override
 	public void remove(Chemin chemin) {
@@ -70,5 +59,4 @@ public class Ellipse extends Chemin {
 	public void accept(IDrawingCallback callback) {
 		callback.drawingCallback(this);		
 	}
-	
 }

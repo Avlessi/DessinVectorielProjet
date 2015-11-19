@@ -1,13 +1,11 @@
 package draw.chemin;
 
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.sun.istack.internal.Nullable;
 
 import draw.utils.Crayon;
-import draw.visitors.interfaces.IDessinateur;
+import draw.utils.IDrawingAWTCallback;
+import draw.utils.IDrawingCallback;
+
 
 /*A path (or guide - see Variables and Data Types for the difference) in Asymptote is simply 
 a piecewise cubic function of a parameter t, parameterized as t ranges from 0 to the number of nodes
@@ -21,15 +19,7 @@ operators:
 public abstract class Chemin {
 	
 	
-	private Crayon crayon;
-	float zoom = 1f;	
-	protected IDessinateur dessinateur;
-//	protected IEtiquetable etiquetable;
-//	protected IRemplissable remplissable;
-	
-	public void setDessinateur(IDessinateur dess) {
-		this.dessinateur = dess;
-	}
+	private Crayon crayon;	
 	
 	public Crayon getCrayon() {
 		return crayon;
@@ -37,33 +27,24 @@ public abstract class Chemin {
 
 	public void setCrayon(Crayon crayon) {
 		this.crayon = crayon;
-	}
-
-	public float getZoom() {
-		return zoom;
-	}
-
-	public void setZoom(float zoom) {
-		this.zoom = zoom;
-	}	
-	
-	public abstract void accept(IDessinateur v, @Nullable Graphics g);	
+	}		
 	
 	protected abstract Chemin getRoot();	
 	
 	//public abstract Point getPointArrivee();
 	
 	//public abstract Point getPointDepart();
+		
+	public abstract void accept(IDrawingAWTCallback callback, Graphics g);
 	
+	public abstract void accept(IDrawingCallback callback);
 	
-	public abstract boolean isFerme();	
-	
-	public abstract void addSegment(Chemin chemin) ;
+	public abstract boolean isClosed();	
 	
 	public abstract void remove(Chemin chemin);
 	
 	public void connectWithLine(Chemin chemin) {
-		//TODO
+		//TODO		
 	}
 	
 	public void connectWithBezier(Chemin chemin) {

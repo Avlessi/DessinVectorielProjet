@@ -11,26 +11,27 @@ import draw.utils.Crayon;
 public class Main {
 	public static void main(String [] args) {
 		Canvas c = Canvas.getCanvas();
-		Dessin d = c.creerDessin();
-						
-		/*Point p = d.creerPoint(0, 0);
-		float rx = 5f;
-		float ry = 10f;
-		Chemin chemin = d.ajouterEllipse(p, rx, ry);
-		Chemin chemin2 = d.ajouterCercle(p, 5);
+		Dessin d = c.creerDessin();	
 		
-		int epaisseur = 1; 
-		Crayon crayon = d.creerCrayon(epaisseur, Color.BLACK);
-		Point p1 = d.creerPoint(20, 20);
-		Point p2 = d.creerPoint(30, 30);
-		Chemin chemin3 = d.ajouterLigne(p1, p2);
-		d.draw(crayon);*/
-				
-		Crayon crayon = d.creerCrayon(1, Color.BLACK);
-		//Chemin point = d.creerPoint(20, 20);
-		//d.dessiner(point, crayon);
-		Chemin ligne = d.creerLigne(d.creerPoint(5, 5), d.creerPoint(15, 15));
-		d.dessiner(ligne, crayon);
-				
+		Crayon crayon = d.createCrayon(Color.BLACK, 1);
+		
+		Chemin ligne = d.createLine(5, 5, 15, 15);
+		ligne.setCrayon(crayon);
+		d.draw(ligne);
+		
+		Chemin ligne2 = d.createLine(30, 30, 60, 60);
+		d.draw(ligne2);
+		
+		Chemin p = d.createPoint(75, 75);
+		d.draw(p);
+		
+		Chemin circle = d.createCircle(100, 100, 20);
+		d.draw(circle);
+		
+		Chemin ellipse = d.createEllipse(150, 150, 20, 15);
+		d.draw(ellipse);
+		
+		Chemin arc = d.createArc(200, 200, 18, 10, 0, 90);
+		d.draw(arc);
 	}
 }
