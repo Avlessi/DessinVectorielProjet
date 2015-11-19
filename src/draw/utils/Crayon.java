@@ -4,19 +4,31 @@ import java.awt.Color;
 
 import draw.Dessin;
 
-//va representer un patron FlyWeight
 public class Crayon {
-	Dessin parentDessin;
 	
-	public Crayon(Dessin dessin) {
-		this.parentDessin = dessin;
+	Color color;
+	int thickness;
+	
+	public Crayon(Color color, int thickness) {
+		this.color = color;
+		this.thickness = thickness;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public int getThickness() {
+		return thickness;
+	}
+
+	public void setThickness(int thickness) {
+		this.thickness = thickness;
 	}
 	
-	public Crayon(Color color, int thickness ) {
-		
-	}
 	
-	public void setParentDessin(Dessin d) {
-		this.parentDessin = d;
-	}
 }

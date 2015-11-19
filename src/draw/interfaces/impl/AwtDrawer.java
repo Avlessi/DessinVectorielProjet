@@ -1,6 +1,9 @@
 package draw.interfaces.impl;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,8 @@ import draw.utils.IDrawingAWTCallback;
 public class AwtDrawer extends JFrame implements IDrawer {
 	
 	DrawPanel panel;
+	Color defaultColor = Color.BLACK;
+	
 	
 	public AwtDrawer() {
 		panel = new DrawPanel();
@@ -32,9 +37,7 @@ public class AwtDrawer extends JFrame implements IDrawer {
 	class DrawPanel extends JPanel implements IDrawingAWTCallback {
 		Graphics g;
 		List<Chemin> chemins = new ArrayList<Chemin>();
-		
-		
-		
+				
 		public void addChemin(Chemin chemin) {
 			chemins.add(chemin);
 			repaint();
@@ -43,7 +46,9 @@ public class AwtDrawer extends JFrame implements IDrawer {
 		
 		@Override
 		public void paint(Graphics g) {
-			super.paintComponent(g);			
+			super.paintComponent(g);	
+			g.setColor(defaultColor);
+			
 			for(Chemin chemin : chemins) {
 				chemin.accept(this, g);		
 			}
@@ -53,18 +58,45 @@ public class AwtDrawer extends JFrame implements IDrawer {
 		@Override
 		public void drawingAWTCallback(Point p, Graphics g) {
 			System.out.println("paint point");
-			g.drawOval(p.getX(), p.getY(), 3, 3);			
+			
+			Graphics2D g2 = (Graphics2D)g;			
+			g2.setColor(defaultColor);
+			
+			if(p.getCrayon() != null) {
+				g2.setColor(p.getCrayon().getColor());
+				g2.setStroke(new BasicStroke(p.getCrayon().getThickness()));
+			}
+			g2.drawOval(p.getX(), p.getY(), 3, 3);			
 		}
 		
 		@Override
 		public void drawingAWTCallback(Line l, Graphics g) {
 			System.out.println("paint line");
-			g.drawLine(l.getP1().getX(), l.getP1().getY(), l.getP2().getX(), l.getP2().getY());
+			g.setColor(defaultColor);
+			
+						
+			Graphics2D g2 = (Graphics2D)g;			
+			g2.setColor(defaultColor);
+			
+			if(l.getCrayon() != null) {
+				g2.setColor(l.getCrayon().getColor());
+				g2.setStroke(new BasicStroke(l.getCrayon().getThickness()));
+			}
+			g2.drawLine(l.getP1().getX(), l.getP1().getY(), l.getP2().getX(), l.getP2().getY());
 		}
 
 		@Override
 		public void drawingAWTCallback(Circle c, Graphics g) {
 			System.out.println("paint circle");
+			g.setColor(defaultColor);
+			
+			Graphics2D g2 = (Graphics2D)g;			
+			g2.setColor(defaultColor);
+			
+			if(c.getCrayon() != null) {
+				g2.setColor(c.getCrayon().getColor());
+				g2.setStroke(new BasicStroke(c.getCrayon().getThickness()));
+			}
 			g.drawArc(c.getCenter().getX(), c.getCenter().getY(), 2 * c.getRadius(), 2 * c.getRadius(), 0, 360);
 			
 		}		
@@ -72,20 +104,38 @@ public class AwtDrawer extends JFrame implements IDrawer {
 		@Override
 		public void drawingAWTCallback(Ellipse ellipse, Graphics g) {
 			System.out.println("paint ellipse");
-			g.drawArc(ellipse.getCenter().getX(), ellipse.getCenter().getY(), 2 * ellipse.getRadius_x(), 2 * ellipse.getRadiux_y(), 0, 360);
+			g.setColor(defaultColor);
+			
+			Graphics2D g2 = (Graphics2D)g;			
+			g2.setColor(defaultColor);
+			
+			if(ellipse.getCrayon() != null) {
+				g2.setColor(ellipse.getCrayon().getColor());
+				g2.setStroke(new BasicStroke(ellipse.getCrayon().getThickness()));
+			}
+			g2.drawArc(ellipse.getCenter().getX(), ellipse.getCenter().getY(), 2 * ellipse.getRadius_x(), 2 * ellipse.getRadiux_y(), 0, 360);
 			
 		}
 
 		@Override
 		public void drawingAWTCallback(Arc arc, Graphics g) {
 			System.out.println("paint arc");
-			g.drawArc(arc.getCenter().getX(), arc.getCenter().getY(), 2 * arc.getRadius_x(), 2 * arc.getRadius_y(), arc.getStartAngle(), arc.getArcAngle());
+			g.setColor(defaultColor);
+			
+			Graphics2D g2 = (Graphics2D)g;			
+			g2.setColor(defaultColor);
+			
+			if(arc.getCrayon() != null) {
+				g2.setColor(arc.getCrayon().getColor());
+				g2.setStroke(new BasicStroke(arc.getCrayon().getThickness()));
+			}
+			g2.drawArc(arc.getCenter().getX(), arc.getCenter().getY(), 2 * arc.getRadius_x(), 2 * arc.getRadius_y(), arc.getStartAngle(), arc.getArcAngle());
 		}
 
 		@Override
 		public void drawingAWTCallback(ComplexChemin l, Graphics g) {
-			// TODO Auto-generated method stub
-			
+			g.setColor(defaultColor);
+			// TODO Auto-generated method stub			
 		}
 	}	
 
