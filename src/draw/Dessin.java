@@ -1,15 +1,14 @@
 package draw;
 
 import java.awt.Color;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 
 import draw.chemin.Chemin;
-import draw.chemin.shapes.Arc;
-import draw.chemin.shapes.Circle;
-import draw.chemin.shapes.Ellipse;
 import draw.chemin.shapes.Point;
-import draw.factories.DrawerFactory;
-import draw.factories.IDrawerFactory;
-import draw.factories.ShapesFactory;
+import draw.factories.IShapesFactory;
+import draw.factories.impl.ShapesFactory;
 import draw.utils.Crayon;
 
 /**
@@ -18,81 +17,92 @@ import draw.utils.Crayon;
  */
 
 public class Dessin {
-	Painter painter;	
-	IDrawerFactory drawFactory;
-	DrawType drawType;
-	
-	public Dessin() {		
-		drawType = DrawType.AWT; // set default draw type
-		drawFactory = new DrawerFactory();		
-		painter = new Painter(drawFactory.create(drawType));				
+	public static final String svgFilePath = "output/svg.html";
+	private Painter painter;		
+	private DrawType drawType;
+	private IShapesFactory shapesFactory;
+
+	public Dessin(DrawType type) {
+		shapesFactory = new ShapesFactory();
+		this.drawType = type;		
+		painter = new Painter(type);		
+
 	}
-	
+
 	protected void setPainter(Painter p) {
 		this.painter = p;
 	}
-	
-	/**	 
-	 * this method will reset Drawer!  
-	 * 
-	 */
-	public void setDrawType(DrawType type) {		
-		if(drawType != type) {
-			drawType = type;
-			// go to another drawing implementation
-			// a new drawer context will be created
-			painter.setDrawer(drawFactory.create(type));
-		}		
-	}
-	/**
-	 * get drawer type
-	 * @return
-	 */
-	public DrawType getDrawType() {
+
+
+	/*public void setDrawType(DrawType type) {
+		this.drawType = type;
+	}*/
+
+	public DrawType getDrawType() {		
 		return this.drawType;
 	}	
-	
+
 	public void draw(Chemin chemin) {		
 		painter.draw(chemin);		
 	}
-	
-	public void label() {
-		//TODO
-		//painter.label();
+
+	public void label(String text, int x, int y) {
+		Point p = shapesFactory.createPoint(x, y);		
+		painter.draw(p);		
+		painter.label(text, p);
 	}
-	
-	public void fill() {
-		//TODO
-		//painter.fill();
+
+	public void fill(Chemin chemin, Color color) {		
+		painter.fill(chemin, color);
 	}
-	
+
 	public void insert() {
 		//TODO
 		//painter.insert():
 	}
-	
+
 	public Chemin createPoint(int x, int y) {
-		return ShapesFactory.createPoint(x, y);
+		return shapesFactory.createPoint(x, y);
 	}
-	
+
 	public Chemin createLine(int x1, int y1, int x2, int y2) {
-		return ShapesFactory.createLine(x1, y1, x2, y2);
+		return shapesFactory.createLine(x1, y1, x2, y2);
 	}	
-	
+
 	public Chemin createArc(int center_x, int center_y, int rx, int ry, int startAngle, int arcAngle) {
-		return ShapesFactory.createArc(ShapesFactory.createPoint(center_x, center_y), rx, ry, startAngle, arcAngle);
+		return shapesFactory.createArc(shapesFactory.createPoint(center_x, center_y), rx, ry, startAngle, arcAngle);
 	}
-	
+
 	public Chemin createEllipse(int center_x, int center_y, int rx, int ry) {
-		return ShapesFactory.createEllipse(ShapesFactory.createPoint(center_x, center_y), rx, ry);
+		return shapesFactory.createEllipse(shapesFactory.createPoint(center_x, center_y), rx, ry);
+	}
+
+	public Chemin createCircle(int center_x, int center_y, int r) {
+		return shapesFactory.createCircle(shapesFactory.createPoint(center_x, center_y), r);		
+	}
+
+	public Chemin createRectangle(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4) {
+		return shapesFactory.createRectangle(shapesFactory.createPoint(x1, y1), 
+				shapesFactory.createPoint(x2, y2), shapesFactory.createPoint(x3, y3), 
+				shapesFactory.createPoint(x4, y4));
 	}
 	
-	public Chemin createCircle(int center_x, int center_y, int r) {
-		return ShapesFactory.createCircle(ShapesFactory.createPoint(center_x, center_y), r);		
-	}		
-	
+	public Chemin createRectangle(int left_x, int top_y, int width, int height) {
+		return shapesFactory.createRectangle(left_x, top_y, width, height);
+	}
+
 	public Crayon createCrayon(Color color, int thickness) {
 		return new Crayon(color, thickness);
 	}
-	
+
+	public void viewInBrowser() {
+		if(drawType == DrawType.SVG) {
+			File svgFile = new File(Dessin.svgFilePath);
+			try {
+				Desktop.getDesktop().browse(svgFile.toURI());
+			} catch (IOException e) {				
+				e.printStackTrace();
+			}		
+		}
+	}
 }

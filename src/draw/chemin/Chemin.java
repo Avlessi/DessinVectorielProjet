@@ -1,5 +1,6 @@
 package draw.chemin;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import draw.utils.Crayon;
@@ -18,6 +19,9 @@ operators:
 
 public abstract class Chemin {
 	
+	public Chemin() {
+		setCrayon(new Crayon(Color.BLACK, 1));
+	}
 	
 	private Crayon crayon;	
 	
@@ -43,11 +47,11 @@ public abstract class Chemin {
 	
 	public abstract void remove(Chemin chemin);
 	
-	public void connectWithLine(Chemin chemin) {
-		//TODO		
+	public Chemin connectWithLine(Chemin chemin) {
+		return new ComplexChemin(chemin);	
 	}
 	
-	public void connectWithBezier(Chemin chemin) {
-		//TODO
+	public Chemin connectWithBezier(Chemin chemin, int x1, int y1, int x2, int y2) {
+		return new ComplexChemin(x1, y1, x2, y2, chemin);
 	}
 }

@@ -2,7 +2,6 @@ package draw.chemin.shapes;
 
 import java.awt.Graphics;
 
-import com.sun.istack.internal.Nullable;
 
 import draw.chemin.Chemin;
 import draw.utils.IDrawingAWTCallback;

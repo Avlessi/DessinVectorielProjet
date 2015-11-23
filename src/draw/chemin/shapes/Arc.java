@@ -19,7 +19,7 @@ public class Arc extends Chemin {
 		this.radius_x = radius_x;
 		this.radius_y = radius_y;
 		this.startAngle = startAngle;
-		this.arcAngle = arcAngle;
+		this.arcAngle = arcAngle;		
 	}
 	
 	public Point getCenter() {
