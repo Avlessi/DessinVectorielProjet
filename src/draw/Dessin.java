@@ -32,6 +32,10 @@ public class Dessin {
 	protected void setPainter(Painter p) {
 		this.painter = p;
 	}
+	
+	protected void setShapesFactory(IShapesFactory factory) {
+		shapesFactory = factory;
+	}
 
 
 	/*public void setDrawType(DrawType type) {

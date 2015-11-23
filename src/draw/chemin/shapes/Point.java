@@ -58,5 +58,15 @@ public class Point extends Chemin {
 	@Override
 	public void accept(IDrawingCallback callback) {
 		callback.drawingCallback(this);		
+	}
+
+	@Override
+	public Point getStartPoint() {
+		return this;
+	}
+
+	@Override
+	public Point getEndPoint() {
+		return this;
 	}	
 }

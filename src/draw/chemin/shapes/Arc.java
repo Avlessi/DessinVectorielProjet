@@ -90,4 +90,16 @@ public class Arc extends Chemin {
 	public void accept(IDrawingCallback callback) {
 		callback.drawingCallback(this);		
 	}
+
+	@Override
+	public Point getStartPoint() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Point getEndPoint() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

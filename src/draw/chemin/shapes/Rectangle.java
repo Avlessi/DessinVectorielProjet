@@ -77,4 +77,14 @@ public class Rectangle extends Chemin {
 		
 	}
 
+	@Override
+	public Point getStartPoint() {
+		return this.p1;
+	}
+
+	@Override
+	public Point getEndPoint() {
+		return this.p3;
+	}
+
 }

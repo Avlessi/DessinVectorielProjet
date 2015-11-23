@@ -2,7 +2,6 @@ package common;
 
 import java.awt.Color;
 
-import draw.Canvas;
 import draw.Dessin;
 import draw.DrawType;
 import draw.chemin.Chemin;
@@ -10,16 +9,25 @@ import draw.utils.Crayon;
 
 public class Main {
 	public static void main(String [] args) {
-		//Canvas c = Canvas.getCanvas();
-		Dessin d = new Dessin(DrawType.SVG);		
+		
+		Dessin d = new Dessin(DrawType.AWT);		
 		Crayon crayon = d.createCrayon(Color.BLUE, 1);
 		
-		Chemin ligne = d.createLine(5, 5, 15, 15);
+		Chemin ligne = d.createLine(5, 5, 5, 15);
 		ligne.setCrayon(crayon);
 		d.draw(ligne);
 		
-		Chemin ligne2 = d.createLine(30, 30, 60, 60);
+		Chemin ligne2 = d.createLine(500, 5, 500, 15);
 		d.draw(ligne2);
+		
+		Chemin path = ligne.connectWithBezier(ligne2, 200, 100, 400, 100);
+		d.draw(path);
+		
+		Chemin ligne3 = d.createLine(600, 40, 650, 100);
+		d.draw(ligne3);				
+		
+		Chemin path2 = path.connectWithLine(ligne3);
+		d.draw(path2);
 		
 		Chemin p = d.createPoint(75, 75);
 		d.draw(p);
@@ -29,14 +37,13 @@ public class Main {
 		circle.setCrayon(circleCrayon);
 		d.draw(circle);
 		
-		d.label("Cool text", 10, 10);
+		d.label("Cool text", 500, 500);
 		
 		Crayon myCrayon = d.createCrayon(Color.GREEN, 5);
 		Chemin ellipse = d.createEllipse(150, 150, 20, 15);
 		ellipse.setCrayon(myCrayon);
 		d.fill(ellipse, Color.BLUE);
-		d.draw(ellipse);
-		
+		d.draw(ellipse);		
 		
 		Chemin arc = d.createArc(200, 200, 18, 10, 0, 90);
 		d.draw(arc);

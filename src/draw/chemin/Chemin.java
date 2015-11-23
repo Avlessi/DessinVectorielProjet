@@ -3,6 +3,7 @@ package draw.chemin;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import draw.chemin.shapes.Point;
 import draw.utils.Crayon;
 import draw.utils.IDrawingAWTCallback;
 import draw.utils.IDrawingCallback;
@@ -35,9 +36,9 @@ public abstract class Chemin {
 	
 	protected abstract Chemin getRoot();	
 	
-	//public abstract Point getPointArrivee();
+	public abstract Point getStartPoint();
 	
-	//public abstract Point getPointDepart();
+	public abstract Point getEndPoint();	
 		
 	public abstract void accept(IDrawingAWTCallback callback, Graphics g);
 	
@@ -48,10 +49,24 @@ public abstract class Chemin {
 	public abstract void remove(Chemin chemin);
 	
 	public Chemin connectWithLine(Chemin chemin) {
-		return new ComplexChemin(chemin);	
+		if(this instanceof ComplexChemin) {
+			System.out.println("here");
+			ComplexChemin c = (ComplexChemin) this;
+			c.addLineConnection(chemin);
+			return this;
+		}
+		System.out.println("ret new CompChemin Line");
+		return new ComplexChemin(this, chemin);		
 	}
 	
 	public Chemin connectWithBezier(Chemin chemin, int x1, int y1, int x2, int y2) {
-		return new ComplexChemin(x1, y1, x2, y2, chemin);
+		if(this instanceof ComplexChemin) {
+			System.out.println("and here");
+			ComplexChemin c = (ComplexChemin) this;
+			c.connectWithBezier(chemin, x1, y1, x2, y2);
+			return c;
+		}
+		System.out.println("ret new CompChemin Bezier");
+		return new ComplexChemin(x1, y1, x2, y2, this, chemin);
 	}
 }

@@ -1,6 +1,7 @@
 package draw.interfaces.impl;
 
 import java.awt.Graphics;
+import java.awt.geom.GeneralPath;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -11,6 +12,9 @@ import java.util.List;
 import draw.Dessin;
 import draw.chemin.Chemin;
 import draw.chemin.ComplexChemin;
+import draw.chemin.connection.CheminConnection;
+import draw.chemin.connection.CheminConnection.ConnectionType;
+import draw.chemin.connection.impl.BezierCurveConnection;
 import draw.chemin.shapes.Arc;
 import draw.chemin.shapes.Circle;
 import draw.chemin.shapes.Ellipse;
@@ -42,7 +46,9 @@ public class SvgDrawer implements IDrawer, IDrawingCallback {
 
 	@Override
 	public void draw(Chemin chemin) {
-		chemins.add(chemin);		
+		if(!chemins.contains(chemin)) {
+			chemins.add(chemin);
+		}		
 		try{ 
 			writer = new BufferedWriter(new FileWriter(new File(Dessin.svgFilePath)));
 			writer.write(svgStartString);
@@ -210,7 +216,78 @@ public class SvgDrawer implements IDrawer, IDrawingCallback {
 
 	@Override
 	public void drawingCallback(ComplexChemin l) {
-		// TODO Auto-generated method stub
+		CheminConnection connection = l.getConnection();
+		
+		String xml = "";
+		
+		while(connection != null) {
+			Chemin c = connection.getChemin();
+			
+			System.out.println(connection.getConnectionType());
+			
+			if(connection.getConnectionType() == ConnectionType.Line) {				
+				
+				xml += String.format("<path d='M %d %d L %d %d ", 
+						connection.getChemin().getStartPoint().getX(), 
+						connection.getChemin().getStartPoint().getY(), 
+					    connection.getParentConnection().getChemin().getEndPoint().getX(),
+					    connection.getParentConnection().getChemin().getEndPoint().getY());
+				
+				xml += "' ";
+				
+				String style = "style='";				
+				String stroke = String.format("stroke:rgb(%d,%d,%d); stroke-width:%d; ", connection.getChemin().getCrayon().getColor().getRed(), connection.getChemin().getCrayon().getColor().getGreen(),
+						connection.getChemin().getCrayon().getColor().getBlue(), connection.getChemin().getCrayon().getThickness());
+				
+				// set white color as a filler
+				String fill = String.format("fill:rgb(%d,%d,%d); ", 255, 255, 255 );
+				
+				style += stroke;
+				style += fill;
+				style += "' ";
+				
+				xml += style;
+				xml += " />\n";				
+			}
+			else if(connection.getConnectionType() == ConnectionType.BezierCurve) {
+				
+				BezierCurveConnection bezierConnection = (BezierCurveConnection)connection;			
+				
+				xml = String.format("<path d='M %d %d C %d %d %d %d %d %d ", 
+						bezierConnection.getParentConnection().getChemin().getEndPoint().getX(),
+						bezierConnection.getParentConnection().getChemin().getEndPoint().getY(), 
+						bezierConnection.getX1(), bezierConnection.getY1(),
+						bezierConnection.getX2(), bezierConnection.getY2(),
+						bezierConnection.getChemin().getStartPoint().getX(), 
+						bezierConnection.getChemin().getStartPoint().getY());		
+				
+				xml += "' ";
+				
+				String style = "style='";
+				String stroke = String.format("stroke:rgb(%d,%d,%d); stroke-width:%d; ", connection.getChemin().getCrayon().getColor().getRed(), connection.getChemin().getCrayon().getColor().getGreen(),
+						connection.getChemin().getCrayon().getColor().getBlue(), connection.getChemin().getCrayon().getThickness());
+				
+				// set white color as a filler
+				String fill = String.format("fill:rgb(%d,%d,%d); ", 255, 255, 255 );
+				style += stroke;
+				style += fill;
+				style += "' ";
+				
+				xml += style;				
+				xml += "/>\n";
+			}
+			else if(connection.getConnectionType() == ConnectionType.Empty) {					
+				connection.getChemin().accept(this);
+			}	
+			
+			try {
+				writer.write(xml);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+						
+			connection = connection.getParentConnection();
+		}
 		
 	}
 
