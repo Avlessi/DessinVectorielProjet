@@ -24,7 +24,7 @@ public class Dessin {
 
 	public Dessin(DrawType type) {
 		shapesFactory = new ShapesFactory();
-		this.drawType = type;		
+		drawType = type;		
 		painter = new Painter(type);		
 
 	}
@@ -36,7 +36,6 @@ public class Dessin {
 	protected void setShapesFactory(IShapesFactory factory) {
 		shapesFactory = factory;
 	}
-
 
 	/*public void setDrawType(DrawType type) {
 		this.drawType = type;
@@ -60,9 +59,8 @@ public class Dessin {
 		painter.fill(chemin, color);
 	}
 
-	public void insert() {
-		//TODO
-		//painter.insert():
+	public void insert(Chemin cheminToCut, int left_x, int top_y, int width, int height) {		
+		painter.insert(cheminToCut, shapesFactory.createRectangle(left_x, top_y, width, height));
 	}
 
 	public Chemin createPoint(int x, int y) {

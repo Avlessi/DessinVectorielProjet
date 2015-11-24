@@ -2,9 +2,9 @@ package draw.chemin.shapes;
 
 import java.awt.Graphics;
 
+import draw.callbacks.IDrawingAWTCallback;
+import draw.callbacks.IDrawingCallback;
 import draw.chemin.Chemin;
-import draw.utils.IDrawingAWTCallback;
-import draw.utils.IDrawingCallback;
 
 public class Line extends Chemin {
 	
@@ -34,17 +34,6 @@ public class Line extends Chemin {
 	@Override
 	public boolean isClosed() {		
 		return true;
-	}
-
-	@Override
-	protected Chemin getRoot() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void remove(Chemin chemin) {
-		// TODO Auto-generated method stub		
 	}
 
 	@Override

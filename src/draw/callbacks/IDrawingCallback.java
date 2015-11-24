@@ -1,4 +1,4 @@
-package draw.utils;
+package draw.callbacks;
 
 import draw.chemin.ComplexChemin;
 import draw.chemin.shapes.Arc;

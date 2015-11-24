@@ -4,11 +4,14 @@ import java.awt.Color;
 
 import draw.chemin.Chemin;
 import draw.chemin.shapes.Point;
+import draw.chemin.shapes.Rectangle;
 import draw.factories.IDrawerFactory;
 import draw.factories.IFillerFactory;
+import draw.factories.IInserterFactory;
 import draw.factories.ILabelerFactory;
 import draw.factories.impl.DrawerFactory;
 import draw.factories.impl.FillerFactory;
+import draw.factories.impl.InserterFactory;
 import draw.factories.impl.LabelerFactory;
 import draw.interfaces.IDrawer;
 import draw.interfaces.IFiller;
@@ -24,17 +27,19 @@ public class Painter {
 	IDrawerFactory drawFactory;
 	IFillerFactory fillFactory;
 	ILabelerFactory labelFactory;
+	IInserterFactory insertFactory;
 	
 	public Painter(DrawType drawType) {
 		
 		fillFactory = new FillerFactory();
 		labelFactory = new LabelerFactory();
+		insertFactory = new InserterFactory();
 		
-		drawFactory = new DrawerFactory();
-		
+		drawFactory = new DrawerFactory();		
 		
 		this.filler = fillFactory.create(drawType);
 		this.labeler = labelFactory.create(drawType);
+		this.inserter = insertFactory.create(drawType);
 		
 		this.drawer = drawFactory.create(drawType, filler, labeler, inserter);		
 	}	
@@ -55,15 +60,41 @@ public class Painter {
 		}
 	}
 	
-	public void setDrawer(IDrawer drawer) {
-		this.drawer = drawer;
-	}		
-	
-	public void setFiller(IFiller filler) {
-		this.filler = filler;
+	public void insert(Chemin cheminToCut, Rectangle clipRect) {
+		if(inserter != null) {
+			inserter.insert(cheminToCut, clipRect);
+		}
 	}
-	
-	public void setLabeler(ILabeler labeler) {
-		this.labeler = labeler;
+
+	public IDrawerFactory getDrawFactory() {
+		return drawFactory;
 	}
+
+	public void setDrawFactory(IDrawerFactory drawFactory) {
+		this.drawFactory = drawFactory;
+	}
+
+	public IFillerFactory getFillFactory() {
+		return fillFactory;
+	}
+
+	public void setFillFactory(IFillerFactory fillFactory) {
+		this.fillFactory = fillFactory;
+	}
+
+	public ILabelerFactory getLabelFactory() {
+		return labelFactory;
+	}
+
+	public void setLabelFactory(ILabelerFactory labelFactory) {
+		this.labelFactory = labelFactory;
+	}
+
+	public IInserterFactory getInsertFactory() {
+		return insertFactory;
+	}
+
+	public void setInsertFactory(IInserterFactory insertFactory) {
+		this.insertFactory = insertFactory;
+	}	
 }

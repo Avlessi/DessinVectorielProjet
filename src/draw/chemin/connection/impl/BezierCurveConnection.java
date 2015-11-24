@@ -8,8 +8,7 @@ public class BezierCurveConnection implements CheminConnection {
 	CheminConnection parentConnection;
 	Chemin chemin;	
 	int x1, y1;
-	int x2, y2;
-	//int x3, y3;
+	int x2, y2;	
 
 	public BezierCurveConnection(CheminConnection c, int x1, int y1, int x2, int y2, Chemin chemin) {
 		this.parentConnection = c;

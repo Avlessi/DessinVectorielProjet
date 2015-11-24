@@ -1,4 +1,4 @@
-package draw.utils;
+package draw.callbacks;
 
 import java.awt.Graphics;
 

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import draw.Dessin;
+import draw.callbacks.IDrawingCallback;
 import draw.chemin.Chemin;
 import draw.chemin.ComplexChemin;
 import draw.chemin.connection.CheminConnection;
@@ -25,7 +26,6 @@ import draw.interfaces.IDrawer;
 import draw.interfaces.IFiller;
 import draw.interfaces.IInserter;
 import draw.interfaces.ILabeler;
-import draw.utils.IDrawingCallback;
 
 public class SvgDrawer implements IDrawer, IDrawingCallback {			
 	
@@ -87,20 +87,42 @@ public class SvgDrawer implements IDrawer, IDrawingCallback {
 
 	@Override
 	public void drawingCallback(Circle c) {
+		String xml = "";
+		String clipId = "";
+		String clipRef = "";	
+		
+		if(inserter.contains(c)) {
+			
+			Rectangle r = inserter.getClipRect(c);
+			clipId = "frame" + r.hashCode();
+			xml += "<clipPath id='" + clipId + "'>\n";
+			String rectXml = String.format("<rect x='%d' y='%d' width='%d' height='%d' stroke-width='%d' />\n",
+					r.getP1().getX(), r.getP1().getY(),
+					r.getWidth(), r.getHeight(), 1);
+			xml += rectXml;
+			xml += "</clipPath>\n";
+			
+			clipRef += "clip-path='url(#" + clipId + ")' ";
+		}
+		
 		String pars = String.format("cx='%d' cy='%d' r='%d' ", c.getCenter().getX(), c.getCenter().getY(), c.getRadius());
+				
 		String style = "style='";
 		String stroke = String.format("stroke:rgb(%d,%d,%d); stroke-width:%d; ", c.getCrayon().getColor().getRed(), c.getCrayon().getColor().getGreen(), c.getCrayon().getColor().getBlue(), c.getCrayon().getThickness());
 		String fill = "";
-		if(c.isClosed() && filler.contains(c) ) {
-			fill += String.format("fill:rgb(%d,%d,%d); ", filler.getColor(c).getRed(), filler.getColor(c).getGreen(), filler.getColor(c).getBlue());
+		if(filler.contains(c)) {
+			fill = String.format("fill:rgb(%d,%d,%d); ", filler.getColor(c).getRed(), filler.getColor(c).getGreen(), filler.getColor(c).getBlue());
+		}		
+		else if(inserter.contains(c)) {
+			fill = String.format("fill:rgb(%d,%d,%d); ", c.getCrayon().getColor().getRed(), c.getCrayon().getColor().getGreen(), c.getCrayon().getColor().getBlue());;
 		}
 		else {
-			fill += "fill:rgb(255, 255, 255); ";
+			fill = "fill:rgb(255, 255, 255); ";
 		}
 		style += stroke;
 		style += fill;
 		style += "'";
-		String xml = "<circle " + pars + style + " />\n";
+		xml += "<circle " + pars + clipRef + style + " />\n";
 		try {
 			writer.write(xml);
 			writer.flush();
@@ -138,21 +160,44 @@ public class SvgDrawer implements IDrawer, IDrawingCallback {
 
 	@Override
 	public void drawingCallback(Ellipse e) {
-		String pars = String.format("cx='%d' cy='%d' rx='%d' ry='%d' ", e.getCenter().getX(), e.getCenter().getY(), e.getRadius_x(), e.getRadiux_y());
+		
+		String xml = "";
+		String clipId = "";
+		String clipRef = "";	
+		
+		if(inserter.contains(e)) {
+			
+			Rectangle r = inserter.getClipRect(e);
+			clipId = "frame" + r.hashCode();
+			xml += "<clipPath id='" + clipId + "'>\n";
+			String rectXml = String.format("<rect x='%d' y='%d' width='%d' height='%d' stroke-width='%d' />\n",
+					r.getP1().getX(), r.getP1().getY(),
+					r.getWidth(), r.getHeight(), 1);
+			xml += rectXml;
+			xml += "</clipPath>\n";
+			
+			clipRef += "clip-path='url(#" + clipId + ")' ";
+		}
+		
+		String pars = String.format("cx='%d' cy='%d' rx='%d' ry='%d' ", e.getCenter().getX(), e.getCenter().getY(), e.getRadius_x(), e.getRadius_y());
 		String style = "style='";
 		String stroke = String.format("stroke:rgb(%d,%d,%d); stroke-width:%d; ", e.getCrayon().getColor().getRed(), e.getCrayon().getColor().getGreen(), e.getCrayon().getColor().getBlue(), e.getCrayon().getThickness());
 		
 		String fill = "";
-		if(e.isClosed() && filler.contains(e) ) {
+		if(filler.contains(e) ) {
 			fill += String.format("fill:rgb(%d,%d,%d); ", filler.getColor(e).getRed(), filler.getColor(e).getGreen(), filler.getColor(e).getBlue());
+		}
+		else if(inserter.contains(e)) {
+			fill = String.format("fill:rgb(%d,%d,%d); ", e.getCrayon().getColor().getRed(), e.getCrayon().getColor().getGreen(), e.getCrayon().getColor().getBlue());
 		}
 		else {
 			fill += "fill:rgb(255, 255, 255); ";
 		}		
 		style += stroke;
 		style += fill;
-		style += "'";		
-		String xml = "<ellipse " + pars + style + " />\n";
+		style += "'";
+		
+		xml += "<ellipse " + pars + clipRef + style + " />\n";
 		try {
 			writer.write(xml);
 			writer.flush();
@@ -191,13 +236,35 @@ public class SvgDrawer implements IDrawer, IDrawingCallback {
 	
 	@Override
 	public void drawingCallback(Rectangle r) {
+		
+		String xml = "";
+		String clipId = "";
+		String clipRef = "";	
+		
+		if(inserter.contains(r)) {
+			
+			Rectangle clipRect = inserter.getClipRect(r);
+			clipId = "frame" + clipRect.hashCode();
+			xml += "<clipPath id='" + clipId + "'>\n";
+			String rectXml = String.format("<rect x='%d' y='%d' width='%d' height='%d' stroke-width='%d' />\n",
+					clipRect.getP1().getX(), clipRect.getP1().getY(),
+					clipRect.getWidth(), clipRect.getHeight(), 1);
+			xml += rectXml;
+			xml += "</clipPath>\n";
+			
+			clipRef += "clip-path='url(#" + clipId + ")' ";
+		}
+		
 		String pars = String.format("x='%d' y='%d' width='%d' height='%d' ", r.getP1().getX(), r.getP1().getY(), r.getWidth(), r.getHeight());
 		String style = "style='";
 		String stroke = String.format("stroke:rgb(%d,%d,%d); stroke-width:%d; ", r.getCrayon().getColor().getRed(), r.getCrayon().getColor().getGreen(), r.getCrayon().getColor().getBlue(), r.getCrayon().getThickness());
 		
 		String fill = "";
-		if(r.isClosed() && filler.contains(r) ) {
+		if(filler.contains(r) ) {
 			fill += String.format("fill:rgb(%d,%d,%d); ", filler.getColor(r).getRed(), filler.getColor(r).getGreen(), filler.getColor(r).getBlue());
+		}
+		else if(inserter.contains(r)) {
+			fill = String.format("fill:rgb(%d,%d,%d); ", r.getCrayon().getColor().getRed(), r.getCrayon().getColor().getGreen(), r.getCrayon().getColor().getBlue());
 		}
 		else {
 			fill += "fill:rgb(255, 255, 255); ";
@@ -205,7 +272,7 @@ public class SvgDrawer implements IDrawer, IDrawingCallback {
 		style += stroke;
 		style += fill;
 		style += "'";		
-		String xml = "<rect " + pars + style + " />\n";
+		xml += "<rect " + pars + clipRef + style + " />\n";
 		try {
 			writer.write(xml);
 			writer.flush();
@@ -220,10 +287,7 @@ public class SvgDrawer implements IDrawer, IDrawingCallback {
 		
 		String xml = "";
 		
-		while(connection != null) {
-			Chemin c = connection.getChemin();
-			
-			System.out.println(connection.getConnectionType());
+		while(connection != null) {			
 			
 			if(connection.getConnectionType() == ConnectionType.Line) {				
 				

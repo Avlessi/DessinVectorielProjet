@@ -2,9 +2,9 @@ package draw.chemin.shapes;
 
 import java.awt.Graphics;
 
+import draw.callbacks.IDrawingAWTCallback;
+import draw.callbacks.IDrawingCallback;
 import draw.chemin.Chemin;
-import draw.utils.IDrawingAWTCallback;
-import draw.utils.IDrawingCallback;
 
 public class Circle extends Chemin {
 	
@@ -35,20 +35,7 @@ public class Circle extends Chemin {
 	@Override
 	public boolean isClosed() {
 		return true;
-	}
-
-	@Override
-	protected Chemin getRoot() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-
-	@Override
-	public void remove(Chemin chemin) {
-		// TODO Auto-generated method stub
-		
-	}
+	}	
 
 	@Override
 	public void accept(IDrawingAWTCallback callback, Graphics g) {
@@ -62,13 +49,13 @@ public class Circle extends Chemin {
 
 	@Override
 	public Point getStartPoint() {
-		// TODO Auto-generated method stub
-		return null;
+		Point p = new Point(center.getX(), center.getY() - radius);
+		return p;
 	}
 
 	@Override
 	public Point getEndPoint() {
-		// TODO Auto-generated method stub
-		return null;
+		Point p = new Point(center.getX(), center.getY() - radius);
+		return p;
 	}
 }

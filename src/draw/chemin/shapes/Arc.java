@@ -2,9 +2,9 @@ package draw.chemin.shapes;
 
 import java.awt.Graphics;
 
+import draw.callbacks.IDrawingAWTCallback;
+import draw.callbacks.IDrawingCallback;
 import draw.chemin.Chemin;
-import draw.utils.IDrawingAWTCallback;
-import draw.utils.IDrawingCallback;
 
 public class Arc extends Chemin {
 	
@@ -66,20 +66,7 @@ public class Arc extends Chemin {
 	public boolean isClosed() {		
 		return false;
 	}
-
-	@Override
-	protected Chemin getRoot() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
-	@Override
-	public void remove(Chemin chemin) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	@Override
 	public void accept(IDrawingAWTCallback callback, Graphics g) {
 		callback.drawingAWTCallback(this, g);
@@ -93,13 +80,13 @@ public class Arc extends Chemin {
 
 	@Override
 	public Point getStartPoint() {
-		// TODO Auto-generated method stub
-		return null;
+		Point p = new Point(center.getX(), center.getY() - radius_y);
+		return p;
 	}
 
 	@Override
 	public Point getEndPoint() {
-		// TODO Auto-generated method stub
-		return null;
+		Point p = new Point(center.getX(), center.getY() - radius_y);
+		return p;
 	}
 }

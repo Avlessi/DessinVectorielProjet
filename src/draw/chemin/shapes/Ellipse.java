@@ -4,20 +4,20 @@ import java.awt.Graphics;
 
 import com.sun.istack.internal.Nullable;
 
+import draw.callbacks.IDrawingAWTCallback;
+import draw.callbacks.IDrawingCallback;
 import draw.chemin.Chemin;
-import draw.utils.IDrawingAWTCallback;
-import draw.utils.IDrawingCallback;
 
 public class Ellipse extends Chemin {
 	
 	Point center;
 	int radius_x;
-	int radiux_y;
+	int radius_y;
 	
 	public Ellipse(Point center, int r_x, int r_y) {		
 		this.center = center;
 		radius_x = r_x;
-		radiux_y = r_y;
+		radius_y = r_y;
 	}	
 
 	public Point getCenter() {
@@ -36,30 +36,18 @@ public class Ellipse extends Chemin {
 		this.radius_x = radius_x;
 	}
 
-	public int getRadiux_y() {
-		return radiux_y;
+	public int getRadius_y() {
+		return radius_y;
 	}
 
-	public void setRadiux_y(int radiux_y) {
-		this.radiux_y = radiux_y;
+	public void setRadius_y(int radiux_y) {
+		this.radius_y = radiux_y;
 	}
 
 	@Override
 	public boolean isClosed() {		
 		return true;
-	}
-
-	@Override
-	protected Chemin getRoot() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void remove(Chemin chemin) {
-		// TODO Auto-generated method stub
-		
-	}
+	}	
 
 	@Override
 	public void accept(IDrawingAWTCallback callback, Graphics g) {
@@ -73,14 +61,14 @@ public class Ellipse extends Chemin {
 
 	@Override
 	public Point getStartPoint() {
-		// TODO Auto-generated method stub
-		return null;
+		Point p = new Point(center.getX(), center.getY() - radius_y);
+		return p;
 	}
 
 	@Override
 	public Point getEndPoint() {
-		// TODO Auto-generated method stub
-		return null;
+		Point p = new Point(center.getX(), center.getY() - radius_y);
+		return p;
 	}
 	
 }

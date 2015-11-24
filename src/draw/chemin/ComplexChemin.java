@@ -4,13 +4,13 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import draw.callbacks.IDrawingAWTCallback;
+import draw.callbacks.IDrawingCallback;
 import draw.chemin.connection.CheminConnection;
 import draw.chemin.connection.impl.BezierCurveConnection;
 import draw.chemin.connection.impl.EmptyConnection;
 import draw.chemin.connection.impl.LineConnection;
 import draw.chemin.shapes.Point;
-import draw.utils.IDrawingAWTCallback;
-import draw.utils.IDrawingCallback;
 
 public class ComplexChemin extends Chemin {
 			
@@ -38,32 +38,16 @@ public class ComplexChemin extends Chemin {
 		return this.connection;
 	}
 
-	@Override
-	protected Chemin getRoot() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public boolean isClosed() {
-		// TODO Auto-generated method stub
+		if(getStartPoint().getX() == getEndPoint().getX() &&
+				getStartPoint().getY() == getEndPoint().getY())
+			return true;
 		return false;
-	}
-
-	@Override
-	public void remove(Chemin chemin) {
-		// TODO Auto-generated method stub
-		
-	}
+	}	
 	
-	/*@Override
-	public Chemin connectWithLine(Chemin chemin) {
-		connection = new LineConnection(this.connection, chemin);
-		return chemin;
-	}*/
-	
-	//@Override Chemin connectWithBezier(Chemin chemin) {
-
 	@Override
 	public void accept(IDrawingAWTCallback callback, Graphics g) {
 		callback.drawingAWTCallback(this, g);		

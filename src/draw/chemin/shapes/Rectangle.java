@@ -2,9 +2,9 @@ package draw.chemin.shapes;
 
 import java.awt.Graphics;
 
+import draw.callbacks.IDrawingAWTCallback;
+import draw.callbacks.IDrawingCallback;
 import draw.chemin.Chemin;
-import draw.utils.IDrawingAWTCallback;
-import draw.utils.IDrawingCallback;
 
 public class Rectangle extends Chemin {
 	
@@ -48,13 +48,7 @@ public class Rectangle extends Chemin {
 
 	public int getHeight() {
 		return height;
-	}
-	
-	@Override
-	protected Chemin getRoot() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	}	
 
 	@Override
 	public void accept(IDrawingAWTCallback callback, Graphics g) {
@@ -69,13 +63,7 @@ public class Rectangle extends Chemin {
 	@Override
 	public boolean isClosed() {
 		return true;
-	}
-
-	@Override
-	public void remove(Chemin chemin) {
-		// TODO Auto-generated method stub
-		
-	}
+	}	
 
 	@Override
 	public Point getStartPoint() {
