@@ -13,7 +13,8 @@ import draw.utils.Crayon;
 
 /**
  *
- * Dessin class serves as a manager class
+ * Dessin class serves as a manager class. All drawing functions and
+ * creation of new figures should be addressed to this class 
  */
 
 public class Dessin {
